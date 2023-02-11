@@ -12,8 +12,8 @@ var meme = false
 let font
 
 // timing vars
-var SECONDS_OF_TEXT = 100
-var SECONDS_OF_PHOTO = 10
+var SECONDS_OF_TEXT = 240
+var SECONDS_OF_PHOTO = 240
 var n_time = 0
 var cur_time = Date.now() / 1000
 var ph_time = Date.now() / 1000 + SECONDS_OF_TEXT
@@ -70,6 +70,7 @@ class heart {
     this.g = Math.random() * 255
     this.b = Math.random() * 255
     this.n_time = Math.random() * 1024
+    this.size_buf=0
   }
 
   new_color() {
@@ -80,7 +81,7 @@ class heart {
 
   draw() {
     fill(this.r, this.g, this.b, 100)
-    this.size_c = this.size * noise(this.n_time)
+    this.size_c = (this.size * noise(this.n_time)) - this.size_buf
     this.pos = draw_heart(this.x, this.y, this.size_c)
   }
 
@@ -88,10 +89,15 @@ class heart {
     if (this.pos[0] <= 0 || this.pos[2] >= w) {
       this.dx *= -1
       this.new_color()
+      this.size_buf=20
     }
     if (this.pos[1] <= 0 || this.pos[3] >= h) {
       this.dy *= -1
       this.new_color()
+      this.size_buf=20
+    }
+    if (this.size_bif>0){
+      this.size_buf+=1
     }
     this.size
     this.x += this.dx
