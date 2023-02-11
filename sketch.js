@@ -7,11 +7,13 @@ var h = window.innerHeight;
 var max_walk_size = 200
 var num_hearts = 10
 var hearts = []
-let font;
+var quote = false
+var meme = false
+let font
 
 // timing vars
-var SECONDS_OF_TEXT = 20
-var SECONDS_OF_PHOTO = 20
+var SECONDS_OF_TEXT = 420
+var SECONDS_OF_PHOTO = 300
 var n_time = 0
 var cur_time = Date.now()/1000
 var ph_time = Date.now()/1000 + SECONDS_OF_TEXT
@@ -102,11 +104,25 @@ function draw_heart(x, y, size) {
 }
 
 function get_quote(){
-  return valentines_quotes[Math.floor(Math.random()*valentines_quotes.length)]
+  if (quote == false){
+    return valentines_quotes[Math.floor(Math.random()*valentines_quotes.length)]
+  }
+  let new_quote = valentines_quotes[Math.floor(Math.random()*valentines_quotes.length)]
+  while (quote == new_quote){
+    let new_quote = valentines_quotes[Math.floor(Math.random()*valentines_quotes.length)]
+  }
+  return new_quote
 }
 
 function get_image(){
-  return imgs[Math.floor(Math.random()*imgs.length)]
+  if (meme == false){
+    return imgs[Math.floor(Math.random()*imgs.length)]
+  }
+  let new_image = imgs[Math.floor(Math.random()*imgs.length)]
+  while (meme == false || meme == new_image){
+    new_image = imgs[Math.floor(Math.random()*imgs.length)]
+  }
+  return new_image
 }
 
 function setup() {
