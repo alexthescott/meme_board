@@ -18,7 +18,7 @@ var ph_time = Date.now()/1000 + SECONDS_OF_TEXT
 
 let imgs = [];
 function preload() {
-  for (let i = 0; i < 17; i++) {
+  for (let i = 0; i < 34; i++) {
     if(i < 9){
       //console.log("00" + i)
       imgs[i] = loadImage("memes/meme_0"+(i+1).toString()+".png")
