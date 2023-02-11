@@ -4,8 +4,8 @@ var h = window.innerHeight;
 
 
 // onscreen vars
-var max_walk_size = 200
-var num_hearts = 10
+var max_walk_size = 250
+var num_hearts = 32
 var hearts = []
 var quote = false
 var meme = false
@@ -146,7 +146,7 @@ function draw() {
       quote = get_quote()
       meme = get_image()
       ph_time = cur_time+SECONDS_OF_TEXT
-      background(255*(0.5+noise(n_time)/2),255*(0.5+noise(n_time+32)/2),128*(0.5+noise(n_time+64)/2));
+      background(255*(0.7+noise(n_time)/2),255*(0.7+noise(n_time+32)/2),128*(0.5+noise(n_time+64)/2));
     } else {
       image(meme,0,0,w,h)
     }
