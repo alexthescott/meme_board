@@ -18,17 +18,14 @@ var ph_time = Date.now()/1000 + SECONDS_OF_TEXT
 
 let imgs = [];
 function preload() {
-  imgs[0] = loadImage('memes/meme_01.png');
-  imgs[1] = loadImage('memes/meme_02.png');
-  imgs[2] = loadImage('memes/meme_03.png');
-  imgs[3] = loadImage('memes/meme_04.png');
-  imgs[4] = loadImage('memes/meme_05.png');
-  imgs[5] = loadImage('memes/meme_06.png');
-  imgs[6] = loadImage('memes/meme_07.png');
-  imgs[7] = loadImage('memes/meme_08.png');
-  imgs[8] = loadImage('memes/meme_09.png');
-
-
+  for (let i = 0; i < 17; i++) {
+    if(i < 9){
+      //console.log("00" + i)
+      imgs[i] = loadImage("memes/meme_0"+(i+1).toString()+".png")
+    } else{
+      imgs[i] = loadImage("memes/meme_"+(i+1).toString()+".png")
+    }
+  }
   font = loadFont("Cheeky_Rabbit.ttf")
 }
 
