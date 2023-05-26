@@ -4,7 +4,7 @@ var h = window.innerHeight;
 
 var quote = false
 var meme = false
-var meme_count = 34
+var meme_count = 33
 var face_count = 13
 let font
 
