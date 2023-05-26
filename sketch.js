@@ -2,13 +2,10 @@
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-
-// onscreen vars
-var max_walk_size = 250
-var num_hearts = 32
-var hearts = []
 var quote = false
 var meme = false
+var meme_count = 34
+var face_count = 13
 let font
 
 // timing vars
@@ -19,8 +16,9 @@ var cur_time = Date.now() / 1000
 var ph_time = Date.now() / 1000 + SECONDS_OF_TEXT
 
 let imgs = [];
+let faces = [];
 function preload() {
-  for (let i = 0; i < 34; i++) {
+  for (let i = 0; i < meme_count; i++) {
     if (i < 9) {
       //console.log("00" + i)
       imgs[i] = loadImage("memes/meme_0" + (i + 1).toString() + ".png")
@@ -28,101 +26,48 @@ function preload() {
       imgs[i] = loadImage("memes/meme_" + (i + 1).toString() + ".png")
     }
   }
-  font = loadFont("Cheeky_Rabbit.ttf")
+  for (let i = 0; i < face_count; i++) {
+    if (i < 9) {
+      //console.log("00" + i)
+      faces[i] = loadImage("faces/face_0" + (i + 1).toString() + ".png")
+    } else {
+      faces[i] = loadImage("faces/face_" + (i + 1).toString() + ".png")
+    }
+  }
+  font = loadFont("WitchingHour.ttf")
 }
 
 var quote = ""
-var valentines_quotes = ["I love you more than a squirrel loves nuts",
-  "You light up my life like the noon sun, but I'd rather see you naked",
-  "Are you a beaver? ‘Cos, DAM!",
-  "If you were a Transformer, you’d be Optimus Fine",
-  "You treat me like a unicorn even though I’m an ass",
-  "I'm not saying you're my everything, but you're definitely my favorite",
-  "You're the peanut butter to my jelly, the cheese to my crackers",
-  "I love you more than a dog loves belly rubs, and that's a lot",
-  "You stole a pizza my heart",
-  "Cuz I'm the biggest bird",
-  "I'm your biggest fan, like a ceiling fan",
-  "You're the pickle to my sandwich",
-  "My heart is gushing—I lava you",
-  "You’re one in a chameleon",
-  "Words can’t espresso how much I love you",
-  "Thou art the rose among the thorns?",
-  "Don’t go bacon my heart",
-  "I love you more than any algorithm can compute",
-  "My love for you is as timeless as cyberspace",
+var quotes = ["So glad you're still alive and cake-ing",
+  "Have a grate birthday. Hope that’s not too cheesy",
+  "Time to par-tea!",
+  "You’re not old. You’re aged to perfection",
+  "Happy Birthday to Mae!!!",
+  "Happy Birthday to Luka!!!",
+  "Your birthday cake brings all the boys to the yard",
+  "IHave a toad-ally awesome birthday",
+  "Oh ship, it's your birthday",
+  "I always get emotional on my birthday. Even my cake is in tiers",
+  "Miso happy it's your birthday.",
+  "Hippo-birthday to you!",
+  "Turning 20-something... is nothing to wine about.",
+  "Happy birthday, best tea.",
+  "Your birthday is kind of a big dill.",
+  "Get ready to pod-y.",
+  "Wishing my sauciest friend an A1 birthday.",
+  "Have an owl-some birthday.",
+  "Raisin a toast for your birthday.",
   "Shit Cock Heck Balls Fuck Ass Crap",
-  "Balls"
+  "Hope your birthday is shrimply amazing."
 ]
-
-class heart {
-  constructor() {
-    this.x = max_walk_size / 2 + (Math.random() * (w - max_walk_size))
-    this.y = max_walk_size / 2 + (Math.random() * (h - max_walk_size * 1.5))
-    this.size = 10 + (max_walk_size - 10) * Math.random()
-    this.size_c = this.size
-    this.pos = []
-    this.dx = Math.random() < 0.5 ? -1 : 1
-    this.dx *= Math.random() < 0.5 ? 1.2 : 1
-    this.dy = Math.random() < 0.5 ? -1 : 1
-    this.dy *= Math.random() < 0.5 ? 1.2 : 1
-    this.r = Math.random() * 255
-    this.g = Math.random() * 255
-    this.b = Math.random() * 255
-    this.n_time = Math.random() * 1024
-    this.size_buf=0
-  }
-
-  new_color() {
-    this.r = Math.random() * 255
-    this.g = Math.random() * 255
-    this.b = Math.random() * 255
-  }
-
-  draw() {
-    fill(this.r, this.g, this.b, 100)
-    this.size_c = (this.size * noise(this.n_time)) - this.size_buf
-    this.pos = draw_heart(this.x, this.y, this.size_c)
-  }
-
-  update() {
-    if (this.pos[0] <= 0 || this.pos[2] >= w) {
-      this.dx *= -1
-      this.new_color()
-      this.size_buf=20
-    }
-    if (this.pos[1] <= 0 || this.pos[3] >= h) {
-      this.dy *= -1
-      this.new_color()
-      this.size_buf=20
-    }
-    if (this.size_bif>0){
-      this.size_buf+=1
-    }
-    this.size
-    this.x += this.dx
-    this.y += this.dy
-    this.n_time += 0.005
-  }
-}
-
-// https://editor.p5js.org/Mithru/sketches/Hk1N1mMQg
-function draw_heart(x, y, size) {
-  beginShape();
-  vertex(x, y);
-  bezierVertex(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);
-  bezierVertex(x + size, y + size / 3, x + size / 2, y - size / 2, x, y);
-  endShape(CLOSE);
-  return [x - 0.58 * size, y - 0.152 * size, x + 0.58 * size, y + 0.98 * size]
-}
 
 function get_quote() {
   if (quote == false) {
-    return valentines_quotes[Math.floor(Math.random() * valentines_quotes.length)]
+    return quotes[Math.floor(Math.random() * quotes.length)]
   }
-  let new_quote = valentines_quotes[Math.floor(Math.random() * valentines_quotes.length)]
+  let new_quote = quotes[Math.floor(Math.random() * quotes.length)]
   while (quote == new_quote) {
-    let new_quote = valentines_quotes[Math.floor(Math.random() * valentines_quotes.length)]
+    let new_quote = quotes[Math.floor(Math.random() * quotes.length)]
   }
   return new_quote
 }
@@ -138,18 +83,26 @@ function get_image() {
   return new_image
 }
 
+function draw_face_circle(radius, count) {
+  x = noise(radius / 100 + n_time)
+  iterate = 0
+  for (let i = x; i < TWO_PI + x/2; i += PI / count) {
+    let x = cos(i) * radius
+    let y = sin(i) * radius
+    image(faces[iterate %(face_count-1)], windowWidth / 2 + x, windowHeight / 2 + y, 100, 100)
+    iterate+=1
+  }
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(255 * (0.5 + noise(n_time) / 2), 255 * (0.5 + noise(n_time + 32) / 2), 128 * (0.5 + noise(n_time + 64) / 2));
+  // background(255 * (0.5 + noise(n_time) / 2), 255 * (0.5 + noise(n_time + 32) / 2), 128 * (0.5 + noise(n_time + 64) / 2));
   textFont(font)
   textSize(128)
   textAlign(CENTER)
   quote = get_quote()
   meme = get_image()
-  for (let i = 0; i < num_hearts; i++) {
-    hearts.push(new heart())
-  }
-
+  shape = createGraphics(200, 200);
 }
 
 function draw() {
@@ -166,15 +119,18 @@ function draw() {
   } else {
 
     background(255 * (0.5 + noise(n_time) / 2), 255 * (0.5 + noise(n_time + 32) / 2), 128 * (0.5 + noise(n_time + 64) / 2), 32);
-    fill(255)
-    text(quote, w / 2 - 600 + 1, h / 2 - 200 + 1, 1200, 800)
-    fill(0)
-    text(quote, w / 2 - 600, h / 2 - 200, 1200, 800)
-    for (let i = 0; i < num_hearts; i++) {
-      hearts[i].update()
-      hearts[i].draw()
-    }
     n_time += 0.001
+    draw_face_circle(width / 12, 4)
+    draw_face_circle(width / 6, 6)
+    draw_face_circle(width / 4, 8)
+    draw_face_circle(width / 3, 10)
+    draw_face_circle(width / 2.38, 14)
+    draw_face_circle(width / 1.97, 16)
+    draw_face_circle(width / 1.7, 20)
+    fill(0)
+    text(quote, w / 2 - 600 + 1, h / 2 + 1, 1200, 800)
+    fill(255)
+    text(quote, w / 2 - 600, h / 2, 1200, 800)
   }
 }
 
