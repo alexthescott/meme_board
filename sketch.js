@@ -5,11 +5,11 @@ var h = window.innerHeight;
 var quote = false
 var meme = false
 var meme_count = 33
-var face_count = 13
+var face_count = 19
 let font
 
 // timing vars
-var SECONDS_OF_TEXT = 240
+var SECONDS_OF_TEXT = 480
 var SECONDS_OF_PHOTO = 240
 var n_time = 0
 var cur_time = Date.now() / 1000
